@@ -76,17 +76,15 @@
                 Login to Your Account
               </h3>
               <div class="mt-2">
-                <p class="text-sm text-gray-400">Sign in to access the launcher and your games</p>
+                <p class="text-sm text-red-400 italic">
+                  Auth Logic Disabled! <br />
+                  (Real Account not Required)
+                </p>
               </div>
             </div>
           </div>
 
           <form @submit.prevent="handleSubmit" class="mt-5 sm:mt-6 space-y-4">
-            <!-- Error message -->
-            <div v-if="error" class="p-3 bg-red-900/50 border border-red-700 rounded-lg">
-              <p class="text-sm text-red-300">{{ error }}</p>
-            </div>
-
             <!-- Username field -->
             <div>
               <label for="username" class="block text-sm font-medium text-gray-300 mb-1">
@@ -228,7 +226,7 @@ const emit = defineEmits<{
 }>();
 
 // Auth store
-const { login, isLoading, clearError } = useAuth();
+const { login, isLoading } = useAuth();
 
 // Form state
 const form = reactive({
@@ -239,25 +237,11 @@ const form = reactive({
 
 // UI state
 const showPassword = ref(false);
-const error = ref<string | null>(null);
 
 // Handle form submission
 const handleSubmit = async () => {
-  try {
-    error.value = null;
-    clearError();
-
-    // Determine if input is username or username
-    const credentials = form.username.includes('@')
-      ? { username: form.username, password: form.password }
-      : { username: form.username, password: form.password };
-
-    await login(credentials);
-
-    // Success - emit event to close modal
-    emit('loginSuccess');
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Login failed. Please try again.';
-  }
+  const credentials = { username: form.username, password: form.password };
+  await login(credentials);
+  emit('loginSuccess');
 };
 </script>

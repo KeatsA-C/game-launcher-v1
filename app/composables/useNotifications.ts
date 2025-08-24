@@ -1,4 +1,3 @@
-// composables/useNotifications.ts
 import { ref } from 'vue';
 
 interface NotificationState {

@@ -1,4 +1,3 @@
-<!-- components/ui/ActionButton.vue -->
 <template>
   <component
     :is="href ? 'a' : 'button'"

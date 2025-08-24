@@ -1,4 +1,3 @@
-<!-- layout.vue -->
 <template>
   <main>
     <!-- Notification System -->
@@ -139,7 +138,6 @@
 
           <!-- Action Buttons -->
           <div class="flex items-center space-x-3">
-            <!-- Install Launcher (authenticated users only) -->
             <ActionButton
               v-if="authStore.isAuthenticated"
               @click="downloadLauncher"
@@ -256,15 +254,6 @@ import ActionButton from '~/components/ui/ActionButton.vue';
 import DownloadIcon from '~/components/ui/icons/DownloadIcon.vue';
 import LogoutIcon from '~/components/ui/icons/LogoutIcon.vue';
 import MenuIcon from '~/components/ui/icons/MenuIcon.vue';
-import apiService from '~/services/api';
-
-// Navigation configuration
-const navigationLinks = [
-  { name: 'news', href: '/', label: 'News' },
-  { name: 'games', href: '/games', label: 'Games' },
-  { name: 'gallery', href: '/gallery', label: 'Gallery' },
-  { name: 'support', href: '/support', label: 'Support' },
-];
 
 // Stores and composables
 const authStore = useAuth();
@@ -332,7 +321,6 @@ const handleLoginSuccess = async (): Promise<void> => {
   loginInProgress.value = false;
 
   // Refresh data without full page reload
-  await reloadNuxtApp();
 
   // Notification will work since page state is preserved
   showNotification('Successfully logged in!', 'success');
@@ -354,7 +342,7 @@ const downloadLauncher = async (): Promise<void> => {
 
   try {
     showNotification('Preparing launcher download...', 'success');
-    await apiService.downloadLauncher();
+
     showNotification('Launcher download started', 'success');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Download failed';
@@ -368,7 +356,6 @@ const downloadLauncher = async (): Promise<void> => {
 const initializeApp = async (): Promise<void> => {
   try {
     currentPage.value = detectCurrentPage();
-    await authStore.initialize();
 
     // Minimum loading time for smooth UX
     await new Promise<void>((resolve) => setTimeout(resolve, 100));
@@ -411,7 +398,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   cleanupGlobalListener();
-  authStore.cleanup();
 
   if (typeof window !== 'undefined') {
     document.removeEventListener('keydown', handleKeydown);

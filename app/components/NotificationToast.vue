@@ -1,4 +1,3 @@
-<!-- NotificationToast.vue -->
 <template>
   <Transition
     enter-active-class="transition-all duration-300 ease-out"

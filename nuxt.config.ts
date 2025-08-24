@@ -16,5 +16,5 @@ export default defineNuxtConfig({
   },
   // keep this current in new projects:
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 });
