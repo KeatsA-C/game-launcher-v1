@@ -14,7 +14,13 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  // keep this current in new projects:
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+      ],
+    },
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
 });
